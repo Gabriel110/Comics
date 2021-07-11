@@ -1,7 +1,5 @@
 package br.com.gabriel.marvel.usuarios.model
 
-import br.com.gabriel.marvel.usuarios.client.CreatorsResponse
-import br.com.gabriel.marvel.usuarios.client.PriceResponse
 import java.math.BigDecimal
 import javax.persistence.*
 

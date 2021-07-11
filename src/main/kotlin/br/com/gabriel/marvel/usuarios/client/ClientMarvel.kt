@@ -3,6 +3,7 @@ package br.com.gabriel.marvel.usuarios.client
 import br.com.gabriel.marvel.usuarios.model.Autores
 import br.com.gabriel.marvel.usuarios.model.Comic
 import br.com.gabriel.marvel.usuarios.model.Usuario
+import br.com.gabriel.marvel.usuarios.service.GeradorIsbn
 import org.springframework.cloud.openfeign.FeignClient
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -21,12 +22,12 @@ data class ClienteMarvelResponse(
     val status: String,
     val data:DataResponse
 ) {
-    fun toModel(usuario: Usuario): Comic {
+    fun toModel(usuario: Usuario, isbnGerator: GeradorIsbn): Comic {
         return Comic(
             data.results[0].id,
             data.results[0].title,
             data.results[0].description?:" ",
-            data.results[0].isbn,
+            if(data.results[0].isbn.equals(""))isbnGerator.isbn() else data.results[0].isbn,
             BigDecimal(data.results[0].prices[0].price.toString()).setScale(2,RoundingMode.FLOOR),
             data.results[0].creators.items.map { Autores(it.name,  data.results[0].id) },
             usuario
