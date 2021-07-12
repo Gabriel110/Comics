@@ -14,7 +14,7 @@ import java.math.RoundingMode
 interface ClientMarvel {
 
     @GetMapping("/{id}?ts=1625877592&apikey=75c494608b0f4ed2ae1ac84b879c67b1&hash=25b28dae5af30ee4917921dc717fa3dc")
-    fun buscarComic(@PathVariable id:Long ):ClienteMarvelResponse
+    fun buscarComic(@PathVariable id:Long ): ClienteMarvelResponse
 }
 
 data class ClienteMarvelResponse(

@@ -11,19 +11,35 @@ data class ComicResponse (
     val titulo:String,
     val descricao:String,
     val isbn:String,
-    val preco: BigDecimal,
+    val diaDesconto:String?,
+    val descontoAtivo:Boolean,
+    var preco: BigDecimal ,
     val autores:List<Autores>?,
     val usuarioId: Long?
 ){
     constructor(comic:Comic):this(
-        comic.id,
-        comic.comicId,
-        comic.titulo,
-        comic.descricao,
-        comic.isbn,
-        comic.preco,
-        comic.autores,
-        comic.usuario.id
+       id = comic.id,
+       comicId = comic.comicId,
+       titulo = comic.titulo,
+       descricao = comic.descricao,
+       isbn = comic.isbn,
+       preco = comic.preco,
+       diaDesconto = comic.diaDesconto,
+       descontoAtivo = comic.descontoAtivo,
+       autores = comic.autores,
+       usuarioId = comic.usuario.id
+    )
+    constructor(comic:Comic, desconto:BigDecimal):this(
+        id = comic.id,
+        comicId = comic.comicId,
+        titulo = comic.titulo,
+        descricao = comic.descricao,
+        isbn = comic.isbn,
+        preco = desconto,
+        diaDesconto = comic.diaDesconto,
+        descontoAtivo = comic.descontoAtivo,
+        autores = comic.autores,
+        usuarioId = comic.usuario.id
     )
 }
 

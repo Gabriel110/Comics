@@ -10,4 +10,5 @@ interface ComicsRepository:JpaRepository<Comic,Long> {
     @Query("SELECT c FROM Comic c  WHERE c.usuario.id = :id")
     fun buscarComicsDoUsuario(id:Long):List<Comic>
 
+
 }

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.time.LocalDate
 import java.util.*
 
@@ -20,11 +22,15 @@ class ListarComicController(
 ) {
 
     private val LOGGER = LoggerFactory.getLogger(ListarComicController::class.java)
-    @GetMapping("/listar/{id}")
+    @GetMapping("/listar/comics/{id}")
     fun listar(@PathVariable id:Long):ResponseEntity<Any>{
         if(!usuarioRepository.existsById(id)) return ResponseEntity.notFound().build()
         val comics:List<Comic> = comicsRepository.buscarComicsDoUsuario(id)
 
-        return ResponseEntity.ok(comics.map { ComicResponse(it) })
+        return ResponseEntity.ok(comics.map {
+            var precoComDisconto: BigDecimal = it.preco
+            if(it.descontoAtivo == true) precoComDisconto = it.preco - it.preco.multiply(BigDecimal("0.1"))
+            ComicResponse(it,precoComDisconto.setScale(2,RoundingMode.FLOOR))
+        })
     }
 }
